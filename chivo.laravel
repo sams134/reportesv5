@@ -1,0 +1,22 @@
+laravel new reportesv5 --jet 
+npm install
+npm run dev
+php artisan migrate
+'default' => env('FILESYSTEM_DRIVER', 'public'), -> en config/filesystem
+Features::profilePhotos(), --> en config/jetstream
+
+
+redirigir a sitio principal al hacer login
+app/ providers/routeservice_provider /dashboard  -> /
+
+agregar para dividir archivo de rutas RouteServiceProvider
+ Route::middleware('web','auth)
+                ->namespace($this->namespace)
+                ->group(base_path('routes/admin.php'));
+
+
+admin lte laravel -> seguir instrucciones
+
+
+publicar componentes jetstream
+php artisan vendor:publish --tag=jetstream-views
