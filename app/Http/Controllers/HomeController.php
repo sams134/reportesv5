@@ -17,6 +17,9 @@ class HomeController extends Controller
         })->get();
         $technicians = User::where('user_type',3)->get();
         
+       
+
+        return $technicians;
         //return $inProgressJobs;
         return view('welcome',['inProgressJobs' => $inProgressJobs,'technicians' => $technicians]);
     }

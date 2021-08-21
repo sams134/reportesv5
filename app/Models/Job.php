@@ -65,4 +65,14 @@ class Job extends Model
     {
         return $this->hasOne(Diagnostic::class);
     }
+    public function job_os()
+    {
+        return $this->year."-".$this->os;
+    }
+    public function power_dimensional()
+    {
+        $fullpower = $this->power;
+        $fullpower .= $this->hpkw==1?" HP":" KW";
+        return $fullpower;
+    }
 }

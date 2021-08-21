@@ -20,6 +20,7 @@ class CreateCustomersTable extends Migration
             $table->string('nit');
             $table->string('address');
             $table->string('plant_address')->nullable();
+            $table->mediumText('comments')->nullable();
             $table->unsignedBigInteger('industry_id')->nullable();
 
             $table->foreign('industry_id')->references('id')->on('industries')->onDelete('set null');

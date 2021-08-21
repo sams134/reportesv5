@@ -12,7 +12,10 @@ use App\Models\User;
 use App\Models\Image;
 use App\Models\Image_type;
 use DateTime;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Faker\Generator;
+use Illuminate\Support\Facades\Storage;
 
 class JobSeeder extends Seeder
 {
@@ -24,7 +27,7 @@ class JobSeeder extends Seeder
     public function run()
     {
         //
-        $date = new DateTime('2021-01-01');
+        $date = new DateTime('2021-07-01');
         $customers = Customer::select('id')->get();
         $statuses = Status::select('id')->get();
         $jobTypes = Job_type::select('id')->get();
@@ -32,7 +35,7 @@ class JobSeeder extends Seeder
         while ($date < now())
         {
             
-            $number_of_motors = random_int(0,2);
+            $number_of_motors = 5;
             $last_job = Job::all()->last();
             
                // si ya existe una orden le sumo 1
@@ -60,9 +63,16 @@ class JobSeeder extends Seeder
                     'status_id' => $statuses->random()->id,
                     'job_type_id' => $jobTypes->random()->id
                  ])->each(function($job) use ($technicians){
+                    $faker = Factory::create();
+                     
                      Inventory::factory(1)->create(['job_id' => $job->id]);
                      $job->assignments()->attach($technicians->random()->id,['assigned_by_id' => 1]);
+                     $directoryName = $job->year."-".$job->os;
+                    Storage::makeDirectory('public/jobs/'.$directoryName,'0777');
+                     
                      Image::factory(1)->create([
+                        'url' => $directoryName."/".$faker->image('public/storage/jobs/'.$directoryName,640,480,null,null),
+                       // 'url'=>'nn',
                          'image_type_id' => Image_type::IMAGE_TYPE_JOB_FRONT,
                          'imageable_id' => $job->id,
                          'imageable_type' => Job::class

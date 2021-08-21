@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Dimensional;
 use App\Models\Material_type;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         Storage::deleteDirectory('public/jobs');
-        Storage::makeDirectory('public/jobs');
+        Storage::makeDirectory('public/jobs','0777');
+        
         $this->call(UserSeeder::class);
         $this->call(IndustrySeeder::class);
         $this->call(CustomerSeeder::class);

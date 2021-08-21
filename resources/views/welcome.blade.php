@@ -73,14 +73,82 @@
                 </a>
             </div>
     </section>
-    <section class="mt-12">
+    <section class="mt-12 ">
         <h1 class=" text-center text-gray-600 text-3xl">Nuestros Tecnicos</h1>
         <div class=" mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 gap-6">
             @foreach ($technicians as $technician)
-                <article>
-                    <img src="{{$technician->profile_photo_url}}" alt="" class=" w-full object-cover">
+                  <article class=" bg-white shadow-xl rounded-lg overflow-hidden">
+                    <img src="{{$technician->profile_photo_url}}" alt="" class=" h-48 sm:h-44 w-full object-cover">
                     <div>
-                        <h1 class=" text-center">{{$technician->name}}</h1>
+                        <h1 class=" text-center my-3 text-xl text-gray-700">{{$technician->name}}</h1>
+                        <!-- This example requires Tailwind CSS v2.0+ -->
+                        <div class="flex flex-col">
+                            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Trabajos en progreso
+                                        </th>
+                                        <th scope="col" class="sm:hidden px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Herramientas
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach ($technician->current_jobs as $job)
+                                            <tr>
+                                                <td class="px-4 py-4 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full" src="{{Storage::url('jobs/'.$job->images->first()->url)}}" alt="">
+                                                        </div>
+                                                        <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-700">
+                                                            
+                                                            {{$job->job_os()}}
+                                                        </div>
+                                                        <div class="text-xs text-gray-500">
+                                                            {{$job->job_type->name}}
+                                                            {{$job->power_dimensional()}}
+                                                        </div>
+                                                        <div class="text-sm text-gray-500">
+                                                            {{Str::limit($job->customer->name, 25, '...') }}
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap visible sm:hidden">
+                                                    <ul class="flex text-xl">
+                                                        <li> 
+                                                            <a href="">
+                                                            <i class="fas fa-camera mr-4 text-blue-500 hover:text-blue-700"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li> 
+                                                            <a href="">
+                                                            <i class="fas fa-tag mr-4 text-red-600 hover:text-blue-600"></i>
+                                                            </a>
+                                                            
+                                                        </li>
+                                                       
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        
+                        
+                                    <!-- More people... -->
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+  
+                        <span class=" mx-2 text-xs"> En Progreso: {{$technician->current_jobs->count()}}</span>
                     </div>
                 </article>
             @endforeach

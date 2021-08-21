@@ -30,6 +30,13 @@ class User extends Authenticatable
         'active'
     ];
 
+    protected $withCount = [
+        'jobs',
+        'current_jobs',
+        'finished_jobs',
+        'stoped_jobs'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -71,6 +78,27 @@ class User extends Authenticatable
     public function jobs()
     {
         return $this->belongsToMany(Job::class,'assignments');
+    }
+    public function current_jobs()
+    {
+        return $this->belongsToMany(Job::class,'assignments')->whereHas('status',function($q){
+            $q->where('id',Status::STATUS_TRABAJANDO);
+        });
+    }
+    public function stoped_jobs()
+    {
+        return $this->belongsToMany(Job::class,'assignments')->whereHas('status',function($q){
+            $q->where('id',Status::STATUS_DIAGNOSTICO);
+        });
+    }
+    public function finished_jobs()
+    {
+        return $this->belongsToMany(Job::class,'assignments')->whereHas('status',function($q){
+            $q->where('id',Status::STATUS_FINALIZADO)
+                ->orWhere('id',Status::STATUS_EPF)
+                ->orWhere('id',Status::STATUS_FACTURADO)
+                ->orWhere('id',Status::STATUS_PAGADO);
+        });
     }
     public function logs()
     {
