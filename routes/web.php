@@ -19,6 +19,7 @@ Route::get('/',HomeController::class)->name('home');
 Route::get('jobs', function ($id) {
     return "Aqui muestro el listado de motores";
 })->name('jobs.index');
+
 Route::get('jobs/{job}', function ($id) {
     return "Aqui muestro el listado de motores";
 })->name('jobs.show');

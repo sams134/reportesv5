@@ -16,7 +16,35 @@ class Job extends Model
     protected $guarded = ['id'];
     //protected $withCount = ['assignments'];
 
-    
+    //query scopes
+    public function scopeStatus($query,$status_id)
+    {
+        if ($status_id == 0)
+        {
+            return $query->where('status_id',Status::STATUS_EPF)
+                        ->orWhere('status_id',Status::STATUS_FACTURADO)
+                        ->orWhere('status_id',Status::STATUS_FINALIZADO)
+                        ->orWhere('status_id',Status::STATUS_PAGADO);
+        }
+       
+        if($status_id){
+            return $query->where('status_id',$status_id);
+        }
+    }
+    public function scopeUser($query,$user_id)
+    {
+        if ($user_id)
+        {
+            return $query->whereHas('assignments',function($q) use ($user_id){
+                $q->where('user_id',$user_id);
+            });
+        }
+    }
+    public function scopeCustomer($query,$customer_id)
+    {
+        if ($customer_id)
+          return $query->where('customer_id',$customer_id);
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class);
@@ -40,6 +68,10 @@ class Job extends Model
     public function assignments()
     {
         return $this->belongsToMany(User::class,'assignments')->withTimestamps();;
+    }
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class,'favorites');
     }
     public function images()
     {

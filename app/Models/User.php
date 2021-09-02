@@ -34,7 +34,7 @@ class User extends Authenticatable
         'jobs',
         'current_jobs',
         'finished_jobs',
-        'stoped_jobs'
+        'stopped_jobs'
     ];
 
     /**
@@ -79,13 +79,17 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Job::class,'assignments');
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(Job::class,'favorites');
+    }
     public function current_jobs()
     {
         return $this->belongsToMany(Job::class,'assignments')->whereHas('status',function($q){
             $q->where('id',Status::STATUS_TRABAJANDO);
         });
     }
-    public function stoped_jobs()
+    public function stopped_jobs()
     {
         return $this->belongsToMany(Job::class,'assignments')->whereHas('status',function($q){
             $q->where('id',Status::STATUS_DIAGNOSTICO);

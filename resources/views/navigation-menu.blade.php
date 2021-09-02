@@ -6,15 +6,15 @@
             'active' => request()->routeIs('home')
         ],
         [
-            'name'=> 'Tabla de Torque',
-            'route' => route('torque'),
-            'active' => request()->routeIs('torque')
+            'name'=> 'Trabajos',
+            'route' => route('jobs.index'),
+            'active' => request()->routeIs('jobs.index')
         ]
     ];
 @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="container">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -140,9 +140,9 @@
                             </x-slot>
                         </x-jet-dropdown>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Ingresar</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Registrarse</a>
                         @endif
                     @endauth
                 </div>
@@ -246,10 +246,10 @@
         @else
             <div class="py-1 border-t border-gray-200">
                 <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                    Login
+                    Ingresar
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                    Registro
+                    Registrarse
                 </x-jet-responsive-nav-link>
             </div>
         @endauth

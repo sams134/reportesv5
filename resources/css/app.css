@@ -2,3 +2,5 @@
 
 @import 'tailwindcss/dist/components';
 @import 'tailwindcss/dist/utilities';
+
+@import 'common.css';
