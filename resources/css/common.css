@@ -1,6 +1,6 @@
 .container
 {
-   @apply max-w-7xl mx-auto px-4  
+   @apply max-w-full mx-auto px-4  
 }
 .card {
     @apply bg-white shadow-xl rounded-lg overflow-hidden
@@ -16,6 +16,10 @@
 .tool-item
 {
     @apply flex items-end justify-center text-center mx-auto  pt-1 w-full text-gray-400 group-hover:text-indigo-500 border-b-2 border-transparent group-hover:border-indigo-500
+}
+.user-photo-1
+{
+    @apply rounded-full object-cover border-gray-200 border -m-1 shadow-lg ;
 }
 @media(min-width:640px){
     .container{

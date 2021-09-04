@@ -8,7 +8,7 @@
         [
             'name'=> 'Trabajos',
             'route' => route('jobs.index'),
-            'active' => request()->routeIs('jobs.index')
+            'active' => request()->routeIs('jobs.*')
         ]
     ];
 @endphp

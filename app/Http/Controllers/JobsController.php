@@ -62,7 +62,8 @@ class JobsController extends Controller
     public function show(Job $job)
     {
         //
-        echo "aca muestro el os: ".$job->job_os();
+        
+        return view('jobs.show',compact('job'));
     }
 
     /**

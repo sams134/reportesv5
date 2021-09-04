@@ -33,6 +33,8 @@ class CreateJobsTable extends Migration
             $table->string('eff',12)->nullable();
             $table->string('insul',4)->nullable();
             $table->string('sf',5)->nullable();
+            $table->tinyInteger('phases')->default(Job::PHASES_TRHEE);
+
             $table->dateTime('date_received');
             $table->dateTime('date_required')->nullable();
 

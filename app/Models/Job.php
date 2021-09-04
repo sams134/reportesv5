@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Job extends Model
 {
@@ -12,6 +13,12 @@ class Job extends Model
     const HP = 0;
     const KW = 1;
     const KVA = 2;
+
+    const PHASES_NO = 0;
+    const PHASES_SINGLE = 1;
+    const PHASES_DC = 2;
+    const PHASES_TRHEE = 3;
+
 
     protected $guarded = ['id'];
     //protected $withCount = ['assignments'];
@@ -106,5 +113,15 @@ class Job extends Model
         $fullpower = $this->power;
         $fullpower .= $this->hpkw==1?" HP":" KW";
         return $fullpower;
+    }
+    public function front_images()
+    {
+        return $this->morphMany(Image::class,'imageable')->where('image_type_id',Image_type::IMAGE_TYPE_JOB_FRONT);
+    }
+    public function fecha_ingreso()
+    {
+        $fecha = Carbon::parse($this->date_received)->locale('es');
+      
+        return $fecha->isoFormat("dddd d MMMM YYYY");
     }
 }
