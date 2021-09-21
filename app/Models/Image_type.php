@@ -13,6 +13,7 @@ class Image_type extends Model
 
     public const IMAGE_TYPE_JOB_FRONT = 1;
     public const IMAGE_TYPE_JOB = 2;
+    public const IMAGE_TYPE_MATERIAL = 3;
 
     public function images()
     {

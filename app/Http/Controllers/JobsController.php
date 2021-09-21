@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class JobsController extends Controller
 {
@@ -63,7 +64,8 @@ class JobsController extends Controller
     {
         //
         
-        return view('jobs.show',compact('job'));
+       $statuses = Status::all();
+        return view('jobs.show',compact('job','statuses'));
     }
 
     /**
@@ -72,6 +74,14 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function orders($job_id,&$orders = [])
+    {
+        $job = Job::find($job_id);
+        $orders[] = $job;
+        if (count($job->all_old_orders) > 0)
+            return $this->orders($job->all_old_orders->first()->id,$orders);
+        return $orders;
+    }
     public function edit($id)
     {
         //

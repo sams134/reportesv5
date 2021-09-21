@@ -9,7 +9,13 @@
             'name'=> 'Trabajos',
             'route' => route('jobs.index'),
             'active' => request()->routeIs('jobs.*')
+        ],
+        [
+            'name'=> 'Materiales',
+            'route' => route('materials.index'),
+            'active' => request()->routeIs('materials.*')
         ]
+
     ];
 @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow">

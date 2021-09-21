@@ -19,4 +19,8 @@ class Material_type extends Model
     {
         return $this->hasMany(Material::class);
     }
+    public function image()
+    {
+        return $this->morphOne(Image::class,'imageable');
+    }
 }

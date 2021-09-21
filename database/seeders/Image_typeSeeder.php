@@ -17,5 +17,6 @@ class Image_typeSeeder extends Seeder
         //
         Image_type::create(['id' => 1,'name' => 'Job Front']);
         Image_type::create(['id' => 2,'name' => 'Job']);
+        Image_type::create(['id' => 3,'name' => 'Materials']);
     }
 }

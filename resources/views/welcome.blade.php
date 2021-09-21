@@ -113,7 +113,7 @@
                                                     <div class="flex items-center" @mouseover="open = true">
                                                         <a href="{{route('jobs.show',$job)}}" class="flex">
                                                             <div class="flex-shrink-0 h-10 w-10">
-                                                                <img class="h-10 w-10 rounded-full" src="{{Storage::url('jobs/'.$job->images->first()->url)}}" alt="ss">
+                                                                <img class="h-10 w-10 rounded-full" src="{{Storage::url($job->images->first()->url)}}" alt="ss">
                                                             </div>
                                                             <div class="ml-4">
                                                                 <div class="text-sm font-medium text-gray-700">

@@ -54,13 +54,18 @@ class JobSeeder extends Seeder
              $dateRequired = date('Y-m-d', strtotime($date->format('Y-m-d') . ' +'.$random_time_expected_for_repair.' day'));
             for ($i=0;$i<=$number_of_motors;$i++)
              {
+                $date_finished = null;
+                $status = $statuses->random()->id;
+                if ($status>=4)
+                  $date_finished = date('Y-m-d', strtotime($date->format('Y-m-d') . ' +3 day'));
                 $jobs = Job::factory(1)->create([
                     'year' => $new_year,
                     'os' => str_pad("".$new_os++,4,"0",STR_PAD_LEFT),
                     'date_received' => $date,
                     'date_required' => $dateRequired,
+                    'date_delivered' => $date_finished,
                     'customer_id' => $customers->random()->id,
-                    'status_id' => $statuses->random()->id,
+                    'status_id' => $status,
                     'job_type_id' => $jobTypes->random()->id
                  ])->each(function($job) use ($technicians){
                     $faker = Factory::create();
@@ -71,7 +76,7 @@ class JobSeeder extends Seeder
                     Storage::makeDirectory('public/jobs/'.$directoryName,'0777');
                      
                      Image::factory(1)->create([
-                        'url' => $directoryName."/".$faker->image('public/storage/jobs/'.$directoryName,640,480,null,null),
+                        'url' => 'jobs/'.$directoryName."/".$faker->image(storage_path('app/public/jobs/').$directoryName,640,480,null,null),
                        // 'url'=>'nn',
                          'image_type_id' => Image_type::IMAGE_TYPE_JOB_FRONT,
                          'imageable_id' => $job->id,

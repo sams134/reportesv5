@@ -21,7 +21,7 @@ class Job extends Model
 
 
     protected $guarded = ['id'];
-    //protected $withCount = ['assignments'];
+    
 
     //query scopes
     public function scopeStatus($query,$status_id)
@@ -80,6 +80,31 @@ class Job extends Model
     {
         return $this->belongsToMany(User::class,'favorites');
     }
+    public function warranties()
+    {
+        return $this->belongsToMany(Job::class,'warranties','job_id','warranty_id',);
+    }
+    public function warranty_of()
+    {
+        return $this->belongsToMany(Job::class,'warranties','warranty_id','job_id',);
+    }
+    public function sub_orders()
+    {
+        return $this->belongsToMany(Job::class,'related_jobs','job_id','child_id',);
+    }
+    public function parent_order()
+    {
+        return $this->belongsToMany(Job::class,'related_jobs','child_id','job_id',);
+    }
+    public function old_orders()
+    {
+        return $this->belongsToMany(Job::class,'traces','job_id','parent_id',);
+    }
+    public function new_order()
+    {
+        return $this->belongsToMany(Job::class,'traces','parent_id','job_id',);
+    }
+    
     public function images()
     {
         return $this->morphMany(Image::class,'imageable');
@@ -124,4 +149,10 @@ class Job extends Model
       
         return $fecha->isoFormat("dddd d MMMM YYYY");
     }
+
+    public function all_old_orders()
+    {
+       return $this->old_orders()->with('all_old_orders');
+    }
+    
 }

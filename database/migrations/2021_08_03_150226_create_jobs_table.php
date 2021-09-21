@@ -37,6 +37,7 @@ class CreateJobsTable extends Migration
 
             $table->dateTime('date_received');
             $table->dateTime('date_required')->nullable();
+            $table->dateTime('date_delivered')->nullable();
 
             
             $table->unsignedBigInteger('customer_id');

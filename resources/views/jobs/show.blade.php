@@ -1,18 +1,21 @@
 <x-app-layout>
-    <style>
-        .dropdown:focus-within .dropdown-menu {
-  opacity:1;
-  transform: translate(0) scale(1);
-  visibility: visible;
-}
-    </style>
+    <link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+/>
+
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<style>
+   
+</style>
+
     <section class=" bg-gray-700 py-2 ">
         <div class="container grid grid-cols-1 sm:grid-cols-5 xl:grid-cols-3 gap-3">
             <section class="wrapper_carousel flex flex-col justify-center w-full col-span-1 sm:col-span-3 xl:col-span-2 bg-gray-700"  role="region" aria-label="testimonial carousel">
                 <div class=" relative overflow-hidden flex items-center justify-center w-full mt-1 mb-1 ">
                     @foreach ($job->front_images as $image)
-                    <div class="carousel-item  rounded-3xl shadow border-gray-500 border-1 my-8 mx-2" role="group" aria-label="slide 1 of 5">
-                        <img src="{{Storage::url('jobs/'.$image->url)}}" class="  rounded-3xl w-full object-cover shadow-2xl " >
+                    <div class="carousel-item  rounded-3xl shadow border-gray-500 border-1 my-8 mx-2 max-w-2xl" role="group" aria-label="slide 1 of 5">
+                        <img src="{{Storage::url($image->url)}}" class="  rounded-3xl w-full object-cover shadow-2xl " >
                     </div>
                     @endforeach        
                 </div>
@@ -105,56 +108,67 @@
                 </div>
             </div>
         </div>
+        <section>
+            <div class="container grid grid-cols-1 md:@if($job->date_delivered == null) grid-cols-2 @else grid-cols-3 @endif gap-3 my-1 ">
+                <div class="grid grid-cols-1 lg:grid-cols-2 bg-gray-900 rounded px-4 py-2 justify-center">
+                    <h2 class="text-sm sm:text-base text-gray-400">
+                        <i class="fas fa-calendar-alt text-yellow-400 mr-1"></i>
+                        Fecha Ingreso:</h2>
+                    <h2 class=" text-sm  sm:text-base text-gray-300 ">{{Carbon\Carbon::parse($job->date_received)->format('d/m/Y')}}</h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 bg-gray-900 rounded px-4 py-2 justify-center">
+                    <h2 class=" text-sm sm:text-base text-gray-400">
+                        <i class="fas fa-calendar-plus text-yellow-400 mr-1"></i>
+                        Fecha Ofrecida:</h2>
+                    <h2 class=" text-sm sm:text-base  text-gray-300 ml-5">{{Carbon\Carbon::parse($job->date_expected)->format('d/m/Y')}}</h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2  bg-gray-900 rounded px-4 py-2 justify-center @if($job->date_delivered == null) hidden @endif">
+                    <h2 class=" text-sm sm:text-base  text-gray-400">
+                        <i class="fas fa-calendar-plus text-yellow-400 mr-1"></i>
+                        Fecha Entrega:</h2>
+                    <h2 class=" text-sm sm:text-base  text-gray-300 ml-5">{{Carbon\Carbon::parse($job->date_delivered)->format('d/m/Y')}}</h2>
+                </div>
+            </div>
+        </section>
     </section>
     <div class="container">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mt-1">
-            <div class=" mx-2 bg-white  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer my-3">
-                <div class="h-12 bg-purple-900 flex items-center justify-between">
-                  <p class="mr-0 text-white text-lg pl-5">INGRESO</p>
-                </div>
-                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
-                    <span>Fecha Ingreso: </span>
-                    <span> {{$job->created_at->diffForHumans()}}</span>
-                </div>
-                <p class="py-4 text-2xl ml-5 capitalize"> {{$job->fecha_ingreso()}}</p>
-                <!-- <hr > -->
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mt-1 z-30">
+            
+            
 
-            <div class="mx-2 bg-white  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer my-3">
+            <div class="mx-2 pb-6 bg-white  rounded-sm  shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer my-3">
                 <div class="h-12 bg-indigo-900 flex items-center justify-between">
                   <p class="mr-0 text-white text-lg pl-5">Estado</p>
                 </div>
-                <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
-                  <p class=" text-xl text-gray-600">{{$job->status->name}}</p>
-                </div>
                 
-                <div class="mx-3">
-                    <div class=" relative inline-block text-left dropdown w-full">
-                        <span class="rounded-md shadow-sm"
-                        ><button class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800" 
-                        type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
-                            <span>Cambiar Estado</span>
-                            <svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            </button
-                        ></span>
-                        <div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
-                        <div class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
-                            <div class="px-4 py-3">         
-                            <p class="text-sm leading-5">Signed in as</p>
-                            <p class="text-sm font-medium leading-5 text-gray-900 truncate">tom@example.com</p>
-                            </div>
-                            <div class="py-1">
-                            <a href="javascript:void(0)" tabindex="0" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Account settings</a>
-                            <a href="javascript:void(0)" tabindex="1" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Support</a>
-                            <span role="menuitem" tabindex="-1" class="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 cursor-not-allowed opacity-50" aria-disabled="true">New feature (soon)</span>
-                            <a href="javascript:void(0)" tabindex="2" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left" role="menuitem" >License</a></div>
-                            <div class="py-1">
-                            <a href="javascript:void(0)" tabindex="3" class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"  role="menuitem" >Sign out</a></div>
-                        </div>
+                <h3 class=" mt-3 mx-4 text-gray-800">Defina el Estado:</h3>
+              
+                <div class="text-left mx-4" x-data="{open:false}">
+                    <div>
+                        <button class="flex-inline w-full mt-3 bg-gray-100 shadow h-10 px-4 rounded-lg text-sm text-gray-700 mr-4 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 " x-on:click="open=!open">
+                            <i class="fas fa-signal mr-1 text-lg"></i>
+                            {{$job->status->name}}
+                            <!-- Heroicon name: solid/chevron-down -->
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="origin-top-right absolute z-40 right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" x-show="open" x-on:click.away="open=false">
+                        <div class="py-1" role="none">
+                            <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        @foreach ($statuses as $status)
+                                <a class=" cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-blue-100" role="menuitem" tabindex="-1" id="menu-item-0" wire:click="$set('status_id',{{$status->id}})" x-on:click="open=false">
+                                    {{$status->name}}
+                                </a>    
+                        @endforeach
                         </div>
                     </div>
+                    <!-- component -->
+                    
                 </div>
+
+                       
             </div>
+
             <div class=" mx-2 bg-white  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer my-3">
                 <div class="h-12 bg-blue-900 flex items-center justify-between">
                   <p class="mr-0 text-white text-lg pl-5">Asignaciones</p>
@@ -163,7 +177,7 @@
                     <span>Asignado a: </span>
                     <span> {{$job->assignments_count}}</span>
                 </div>
-                <div class="mx-3 flex justify-between">
+                <div class="mx-3 flex justify-between items-center mb-4">
                     @foreach ($job->assignments as $technician)
                         @if (Storage::disk('public')->exists($technician->profile_photo_path))
                             <img class="user-photo-1 h-14 w-14 transform hover:scale-110" src="{{$technician->profile_photo_url}}"/>
@@ -177,9 +191,117 @@
                 </div>
                 <!-- <hr > -->
             </div>
+            <div class=" mx-2 md:col-span-3 lg:col-span-1 bg-white  rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer my-3">
+                <div class="h-12 bg-blue-900 flex items-center justify-between">
+                  <p class="mr-0 text-white text-lg pl-5">Ordenes Relacionadas</p>
+                </div>
+                
+                <!-- <hr > -->
+            </div>
+            
+           
         </div>
+        {{-- Materiales --}}
+        <section class=" col-span-2 mx-2">
+            <div class="border-1 border-gray-700 bg-white shadow-xl" x-data="{open:false}">
+                <header class=" bg-purple-900 p-3 text-xl  text-gray-100 flex justify-between items-center rounded-md my-3"> 
+                    <span> Materiales </span>
+                    <i x-bind:class="!open?'fas fa-chevron-down':'fas fa-chevron-up'" @click="open=!open"></i>
+                </header>
+                <div class=" mx-2 my-4" x-show="open" x-transition>
+                     hola
+                </div>
+            </div>
+        </section>
+        {{-- Fotos --}}
+        <section class=" col-span-2 mx-2 ">
+            <div class="border-1 border-gray-700 bg-gray-50 shadow-xl" x-data="{open:true}">
+                <header class=" bg-purple-900 p-3 text-xl  text-gray-100 flex justify-between items-center rounded-md shadow backdrop-filter my-3"> 
+                    <span> Fotografias </span>
+                    <i x-bind:class="!open?'fas fa-chevron-down':'fas fa-chevron-up'" @click="open=!open"></i>
+                </header>
+                <div class=" mx-2 mb-4 mt-1  flex text-gray-700 pb-4" x-show="open" x-transition>
+                    
+                     
+                     <div class="swiper flex ">
+                        <div class="swiper-wrapper mb-2 w-4/5">
+                            <div class=" bg-white shadow-2xl m-6 transition duration-500 transform hover:scale-110 hover:text-red-800 z-0 w-52 mr-10 swiper-slide">
+                                <figure>
+                                    <img src="{{asset('img/icons/add_photo.png')}}" alt="" class=" w-96 h-32 rounded object-contain ">
+                                </figure>
+                                <h1 class=" bg-gray-50 p-3">Agregar Fotografia</h1>
+                             </div>
+                            @foreach ($job->images as $image)
+                                <div class=" bg-white shadow-2xl  transition duration-100 transform hover:scale-110 w-52 rounded-lg overflow-hidden swiper-slide">
+                                    <figure>
+                                        <img src="{{Storage::url($image->url)}}" alt="" class=" w-full h-52 rounded object-cover ">
+                                    </figure>
+                                    <div class=" w-auto">
+                                    <input class="bg-gray-50 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 mr-2 text-sm  text-gray-700  focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="{{$image->name}}">
+                                    </div>
+                                    
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                     </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class=" col-span-2 mx-2">
+            <div class="border-1 border-gray-700 bg-white shadow-xl " x-data="{open:false}">
+                <header class=" bg-purple-900 p-3 text-xl  text-gray-100 flex justify-between items-center rounded-md my-3"> 
+                    <span> Documentos </span>
+                    <i x-bind:class="!open?'fas fa-chevron-down':'fas fa-chevron-up'" @click="open=!open"></i>
+                </header>
+                <div class=" mx-2 my-4" x-show="open" x-transition>
+                     hola
+                </div>
+            </div>
+        </section>
     </div>
+    
 @push('scripts')
     <script type="text/javascript" src="{{ asset('js/carrousel.js') }}"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: "auto",
+            // Optional parameters
+            direction: 'horizontal',
+            loop: true,
+
+            // If we need pagination
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // And if we need scrollbar
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 50,
+                },
+            },
+            });
+    </script>
 @endpush
 </x-app-layout>

@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',HomeController::class)->name('home');
 
-Route::get('jobs', function ($id) {
-    return "Aqui muestro el listado de motores";
-})->name('jobs.index');
+
 
 Route::get('jobs/{job}', function ($id) {
     return "Aqui muestro el listado de motores";
 })->name('jobs.show');
+
+
 
 Route::get('manuales', function (){
     return "Aqui Muestro los manuales";
