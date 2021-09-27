@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Material;
 use App\Models\Material_type;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,11 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        $materialTypes = Material_type::orderBy('name')->get();
+        $material_type_id = 1;
+        $material_like = null;
+       
         
-        return view('materials.index',compact('materialTypes'));
+        return view('materials.index',compact('material_type_id','material_like'));
     }
 
     /**
@@ -46,9 +49,13 @@ class MaterialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Material $material)
     {
         //
+        
+        $similar = Material::where('material_type_id',$material->material_type_id)->get()->random(5);
+       
+        return view('materials.show',compact('material','similar'));
     }
 
     /**

@@ -1,7 +1,7 @@
 @props(['job'])
 <div class="card">
     <a href="{{route('jobs.show',$job)}}">
-        <div class="bg-cover bg-center h-56 p-4" style="background-image: url({{asset('storage/jobs/'.$job->images->first()->url)}})">
+        <div class="bg-cover bg-center h-56 p-4" style="background-image: url({{Storage::url($job->images->first()->url)}})">
 
         </div>
     </a>

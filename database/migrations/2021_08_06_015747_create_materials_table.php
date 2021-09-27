@@ -20,6 +20,7 @@ class CreateMaterialsTable extends Migration
             $table->double('price')->nullable();
             $table->double('min')->default(0);
             $table->double('max')->default(1);
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('material_type_id');
             $table->foreign('material_type_id')->references('id')->on('material_types')->onDelete('cascade');
             $table->timestamps();

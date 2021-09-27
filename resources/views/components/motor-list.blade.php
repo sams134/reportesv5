@@ -24,7 +24,7 @@
                                     <div class="flex items-center">
                                         <div class="mr-2">
                                             <a href="{{route('jobs.show',$job)}}">
-                                                <img class="w-10 h-10 rounded-full" src="{{asset('storage/jobs/'.$job->images->first()->url)}}"/>
+                                                <img class="w-10 h-10 rounded-full" src="{{Storage::url($job->images->first()->url)}}"/>
                                             </a>
                                         </div>
                                         <div class="mr-2 ">

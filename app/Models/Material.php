@@ -17,6 +17,14 @@ class Material extends Model
             $q->where('material_type_id',$material_type_id);
         });
     }
+    public function scopeMaterial_like($query,$material_like)
+    {
+        if ($material_like)
+        return $query->whereHas('material_type',function($q) use ($material_like){
+            $q->where('name','like',"%".$material_like."%");
+        })->orWhere('name','like',"%".$material_like."%");
+        
+    }
     public function documents()
     {
         return $this->morphMany(Document::class,'documentable');

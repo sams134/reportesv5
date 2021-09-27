@@ -19,4 +19,8 @@ class Material_movement extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function material_movement_type()
+    {
+        return $this->belongsTo(Material_movements_type::class);
+    }
 }
