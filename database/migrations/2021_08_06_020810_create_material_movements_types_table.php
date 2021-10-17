@@ -16,6 +16,7 @@ class CreateMaterialMovementsTypesTable extends Migration
         Schema::create('material_movements_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('inout'); //0 = in ;  1 = out;   2 = inout
             $table->timestamps();
         });
     }

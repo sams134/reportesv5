@@ -22,8 +22,10 @@ class CreateMaterialMovementsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('material_id')->nullable();
             $table->foreign('material_id')->references('id')->on('materials')->onDelete('set null');
-            $table->unsignedBigInteger('material_movements_type')->nullable();
-            $table->foreign('material_movements_type')->references('id')->on('material_movements_types')->onDelete('set null');
+            $table->unsignedBigInteger('material_movements_type_id')->nullable();
+            $table->foreign('material_movements_type_id')->references('id')->on('material_movements_types')->onDelete('set null');
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('set null');
             $table->timestamps();
         });
     }

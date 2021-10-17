@@ -31,4 +31,8 @@ class Order extends Model
     {
         return $this->belongsTo(Material::class);
     }
+    public function material_movements()
+    {
+        return $this->hasMany(Material_movement::class);
+    }
 }

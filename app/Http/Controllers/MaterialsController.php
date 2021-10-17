@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Material;
+use App\Models\Material_movement;
+use App\Models\Material_movements_type;
 use App\Models\Material_type;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class MaterialsController extends Controller
      */
     public function index()
     {
-        $material_type_id = 1;
+        $material_type_id = null;
         $material_like = null;
        
         
@@ -53,6 +55,9 @@ class MaterialsController extends Controller
     {
         //
         
+        
+       
+        //return $material->material_movements->where('material_movements_type',1);
         $similar = Material::where('material_type_id',$material->material_type_id)->get()->random(5);
        
         return view('materials.show',compact('material','similar'));

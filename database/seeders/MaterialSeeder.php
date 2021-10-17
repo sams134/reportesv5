@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Document;
 use App\Models\Material;
 use App\Models\Material_type;
 use Illuminate\Database\Seeder;
@@ -27,7 +28,15 @@ class MaterialSeeder extends Seeder
                     'min' => 0,
                     'max' => 20,
                     'material_type_id' => 1 // alambre
-                ]);
+                ])->each(function ($wire){
+                    Document::create([
+                        'name' => 'Datasheet',
+                        'url' => 'https://www.essexbrownell.com/media/cms_content/downloads_links/Essex-Wire-Datasheet-GPMR-200-EN-062020.pdf',
+                        'documentable_id' => $wire->id,
+                        'documentable_type' => Material::class,
+                        'doc_type_id' => 1
+                    ]);
+                });
         }
         // espagetis
         for($i=6;$i<22;$i++)

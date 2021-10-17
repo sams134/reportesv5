@@ -17,7 +17,7 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->string('url');
             $table->string('name')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('doc_type_id')->nullable();
             $table->unsignedBigInteger('documentable_id');
             $table->string('documentable_type');

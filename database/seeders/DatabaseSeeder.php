@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Dimensional;
+use App\Models\Material_movement;
+use App\Models\Material_movements_type;
 use App\Models\Material_type;
 
 use Illuminate\Database\Seeder;
@@ -29,11 +31,16 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusSeeder::class);
         $this->call(Image_typeSeeder::class);
         $this->call(Job_typeSeeder::class);
-        $this->call(JobSeeder::class);
-        
+        $this->call(Doc_typeSeeder::class);
         $this->call(DimensionalSeeder::class);
+        $this->call(Material_movements_typeSeeder::class);
         $this->call(Material_typeSeeder::class);
         $this->call(MaterialSeeder::class);
+        $this->call(Material_movementSeeder::class);
+
+        $this->call(JobSeeder::class);
+        
+        
 
     }
 }

@@ -15,11 +15,13 @@ class Material_movements_typeSeeder extends Seeder
     public function run()
     {
         //
-        Material_movements_type::create(['id' => 1,'name'=>'Compra']);
-        Material_movements_type::create(['id' => 2,'name'=>'Compra Consignacion']);
-        Material_movements_type::create(['id' => 3,'name'=>'Venta']);
-        Material_movements_type::create(['id' => 4,'name'=>'Despacho a OS']);
-        Material_movements_type::create(['id' => 5,'name'=>'Despacho a consumibles']);
-        Material_movements_type::create(['id' => 6,'name'=>'Otro']);
+        Material_movements_type::create(['id' => 1,'name'=>'Inicio Inventario','inout'=>0]);
+        Material_movements_type::create(['id' => 2,'name'=>'Compra','inout'=>0]);
+        Material_movements_type::create(['id' => 3,'name'=>'Compra Consignacion','inout'=>0]);
+        Material_movements_type::create(['id' => 4,'name'=>'Venta','inout'=>1]);
+        Material_movements_type::create(['id' => 5,'name'=>'Despacho a OS','inout'=>1]);
+        Material_movements_type::create(['id' => 6,'name'=>'Despacho a consumibles','inout'=>1]);
+        Material_movements_type::create(['id' => 7,'name'=>'Devolucion','inout'=>1]);
+        Material_movements_type::create(['id' => 8,'name'=>'Otro','inout'=>2]);
     }
 }
