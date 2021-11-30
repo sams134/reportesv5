@@ -55,7 +55,7 @@ class JobSeeder extends Seeder
             for ($i = 0; $i <= $number_of_motors; $i++) {
                 $date_finished = null;
                 $status = $statuses->random()->id;
-                if ($status >= 4)
+                if ($status >= 4)  // finished
                     $date_finished = date('Y-m-d', strtotime($date->format('Y-m-d') . ' +3 day'));
                 $jobs = Job::factory(1)->create([
                     'year' => $new_year,
@@ -66,20 +66,19 @@ class JobSeeder extends Seeder
                     'customer_id' => $customers->random()->id,
                     'status_id' => $status,
                     'job_type_id' => $jobTypes->random()->id
-                ])->each(function ($job) use ($technicians) {
+                ])->each(function ($job) use ($technicians,$status) {
                     $faker = Factory::create();
-
+                    $job->stat()->attach($status,['user'=>'Sam']);
                     Inventory::factory(1)->create(['job_id' => $job->id]);
                     for ($i = 0; $i < random_int(1, 3); $i++)
                         $job->assignments()->attach($technicians->random()->id, ['assigned_by_id' => 1]);
-
 
                     $directoryName = $job->year . "-" . $job->os;
                     Storage::makeDirectory('public/jobs/' . $directoryName, '0777');
 
                     Image::factory(1)->create([
                         'url' => 'jobs/' . $directoryName . "/" . $faker->image(storage_path('app/public/jobs/') . $directoryName, 640, 480, null, null),
-                        // 'url'=>'nn',
+                        
                         'image_type_id' => Image_type::IMAGE_TYPE_JOB_FRONT,
                         'imageable_id' => $job->id,
                         'imageable_type' => Job::class

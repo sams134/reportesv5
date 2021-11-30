@@ -63,7 +63,7 @@ class JobsController extends Controller
     public function show(Job $job)
     {
         //
-        
+       
        $statuses = Status::all();
         return view('jobs.show',compact('job','statuses'));
     }

@@ -30,8 +30,9 @@
 
 
         @if (!request()->routeIs('home'))
-            <x-search-bar>
-            </x-search-bar>
+        <div class=" w-full bg-gray-100 flex justify-end">
+            @livewire('search')
+        </div>
         @endif
         <!-- Page Content -->
         <main>

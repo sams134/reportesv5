@@ -14,12 +14,18 @@ class BuyMaterial extends Component
     public $material_id,$provider,$invoice,$quantity,$movement_type;
     public $material;
     
+    protected $rules = [
+        'provider' => 'required',
+        'quantity' => 'required|numeric'
+    ];
+
     public function mount()
     {
         $this->material = Material::find($this->material_id);
     }
     public function save()
     {
+        $this->validate();
         Material_movement::create([
             'quantity' => $this->quantity,
             'user_id' => Auth::user()->id,

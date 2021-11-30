@@ -21,13 +21,17 @@ class JobIndex extends Component
 
     public function render()
     {
+
+     
         $jobs = Job::query()->status($this->status_id)
                             ->user($this->user_id)
                             ->customer($this->customer_id)
                             ->latest('id')
                             ->paginate($this->pagination);
+                        
         $statuses = Status::all();
         $users = User::all();
+       
         return view('livewire.job-index',compact('jobs','statuses','users'));
     }
     public function change_view()

@@ -1,5 +1,5 @@
 <div>
-    <form class="p-4 relative mx-auto text-gray-600" autocomplete="off">
+    <form class="p-4 relative mx-auto text-gray-600 w-full" autocomplete="off">
         <input class=" w-full border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
             type="search" name="search" placeholder="BUSCA OS" wire:model="keyword">
         <button type="submit" class="absolute right-0 top-0 mt-7 mr-8">

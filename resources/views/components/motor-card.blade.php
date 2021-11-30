@@ -29,7 +29,7 @@
             <p class=" text-xs ml-2">{{$job->mfg}}</p>
         </div>
     </div>
-    <div class="flex m-2">
+    <div class="flex m-2 justify-between">
         <div class="flex">
             @foreach ($job->assignments as $technician)
                 @if (Storage::disk('public')->exists($technician->profile_photo_path))
@@ -40,23 +40,10 @@
             @endforeach
             <img src="{{asset('img/icons/plus.png')}}" alt="" class="w-10 h-10 rounded-full border-gray-200 border -m-1 transform hover:scale-110">   
         </div>  
-        <div class="flex ml-auto">
-            @if ($job->status_id == 1) {{-- Sin Asignar --}}
-                <span class="bg-red-200 text-red-700 py-2 px-3 rounded-full text-xs shadow-sm">Sin Asignar</span>
-            @elseif($job->status_id == 2) {{-- Sin Asignar --}}
-                <span class="bg-yellow-200 text-yellow-700 py-2 px-3 rounded-full text-xs shadow-sm">Espera/Diagnostico</span>
-            @elseif($job->status_id == 3) {{-- Sin Asignar --}}
-                <span class="bg-green-200 text-green-700 py-2 px-3 rounded-full text-xs shadow-sm">Trabajando</span>
-            @elseif($job->status_id == 4) {{-- Sin Asignar --}}
-                <span class=" bg-purple-200 text-purple-700 py-2 px-3 rounded-full text-xs shadow-sm">Finalizado</span>
-            @elseif($job->status_id == 5) {{-- Sin Asignar --}}
-                <span class=" bg-blue-200 text-blue-700 py-2 px-3 rounded-full text-xs shadow-sm">EPF</span>
-            @elseif($job->status_id == 6) {{-- Sin Asignar --}}
-                <span class=" bg-pink-200 text-pink-700 py-2 px-3 rounded-full text-xs shadow-sm">Facturado</span>
-            @elseif($job->status_id == 7) {{-- Sin Asignar --}}
-                <span class=" bg-indigo-200 text-indigo-700 py-2 px-3 rounded-full text-xs shadow-sm">Pagado</span>
-            @endif
+        <div class="flex">
+            @livewire('status.change-status', ['job_id' => $job->id], key($job->id))
         </div>
+        
     </div>
     <div class="well">
        
@@ -79,13 +66,9 @@
                     </a>
                 </div>
                 <div class="flex-1 group">
-                    <a href="#" class="tool-item">
-                        <span class="block px-1 pt-1 pb-2">
-                            
-                            <i class="fas fa-camera text-sm pt-1 mb-1 block"></i>
-                            <span class="block text-xs pb-1">Foto</span>
-                        </span>
-                    </a>
+                    
+                        @livewire('foto.upload-foto', ['job_id' => $job->id], key($job->id))
+                    
                 </div>
                 
             </div>

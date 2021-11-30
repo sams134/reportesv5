@@ -10,10 +10,12 @@
         Ingresar Material a Bodega {{$material->name}} 
      </x-slot>
      <x-slot name="content">
-        <div>
+        <div class="my-2">
             <x-jet-label value="Ingrese el proveedor" />
-            <x-jet-input type="text" class="w-full form-input my-3" wire:model.defer="provider"/>
-          
+            <x-jet-input type="text" class="w-full form-input my-1"  wire:model.defer="provider"/>
+           @error('provider')
+               <p class=" text-sm text-red-700"> Debe de ingresar el proveedor</p>
+           @enderror
         </div>
         <div>
             <x-jet-label value="Ingrese el Numero de Factura" />
@@ -25,7 +27,9 @@
                 <div>
                     <x-jet-label value="Ingrese cantidad en {{$material->material_type->dimensional->name}}" />
                     <x-jet-input type="number" class="w-full form-input my-3" placeholder="0" step="0.5" wire:model.defer="quantity"/>
-                  
+                    @error('quantity')
+                    <p class=" text-sm text-red-700"> Debe de ingresar la cantidad</p>
+                @enderror
                 </div>
                 <div>
                     <x-jet-label value="Ingresado por:" />
